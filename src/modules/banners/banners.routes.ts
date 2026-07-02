@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { crudRouter } from "../shared.js";
+import { bannersController } from "./banners.controller.js";
 
 export const bannersRouter = crudRouter(
-  "banner",
+  bannersController,
   z.object({
     title: z.string().min(2),
     subtitle: z.string().min(5),
@@ -11,5 +12,4 @@ export const bannersRouter = crudRouter(
     buttonLink: z.string().min(1),
     isActive: z.boolean().default(true),
   }),
-  { publicWhere: { isActive: true } },
 );
