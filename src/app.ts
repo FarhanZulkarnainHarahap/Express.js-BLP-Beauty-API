@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
+import helmet, { type HelmetOptions } from "helmet";
 import morgan from "morgan";
 import { rateLimit } from "express-rate-limit";
 import { ExpressAuth } from "@auth/express";
@@ -19,9 +19,13 @@ import { errorHandler, notFound } from "./middleware/error.middleware.js";
 import { appController } from "./app.controller.js";
 
 export const app = express();
+const createHelmetMiddleware = helmet as unknown as (
+  options?: Readonly<HelmetOptions>,
+) => express.RequestHandler;
+
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
-app.use(helmet());
+app.use(createHelmetMiddleware());
 app.use(cors(corsOptions));
 app.use(rateLimit({ windowMs: 60_000, limit: 180, standardHeaders: "draft-8" }));
 app.use(
