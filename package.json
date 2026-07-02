@@ -14,10 +14,14 @@
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@auth/express": "^0.12.2",
+    "@auth/prisma-adapter": "^2.11.2",
+    "@prisma/adapter-pg": "^6.19.3",
     "@prisma/client": "^6.19.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.8.0",
@@ -29,6 +33,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "pg": "^8.22.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {

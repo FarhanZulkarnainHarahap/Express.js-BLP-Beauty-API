@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { crudRouter } from "../shared.js";
+import { articlesController } from "./articles.controller.js";
 
 export const articlesRouter = crudRouter(
-  "article",
+  articlesController,
   z.object({
     title: z.string().min(2),
     content: z.string().min(20),
@@ -10,5 +11,5 @@ export const articlesRouter = crudRouter(
     imageUrl: z.string().url().nullable().optional(),
     isPublished: z.boolean().default(false),
   }),
-  { slug: true, detail: true, publicWhere: { isPublished: true } },
+  { detail: true },
 );

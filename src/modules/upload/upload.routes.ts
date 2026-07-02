@@ -1,9 +1,8 @@
 import { Router } from "express";
 import multer from "multer";
-import { uploadImage } from "../../lib/cloudinary.js";
 import { verifyInternalToken } from "../../middleware/auth.middleware.js";
 import { requireAdmin } from "../../middleware/role.middleware.js";
-import { ok } from "../../utils/response.js";
+import { uploadController } from "./upload.controller.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -17,16 +16,5 @@ uploadRouter.post(
   verifyInternalToken,
   requireAdmin,
   upload.single("file"),
-  async (req, res, next) => {
-    try {
-      if (!req.file)
-        return res.status(422).json({
-          success: false,
-          error: { code: "FILE_REQUIRED", message: "A JPG, PNG, or WebP image is required" },
-        });
-      ok(res, { url: await uploadImage(req.file.buffer) }, undefined, 201);
-    } catch (error) {
-      next(error);
-    }
-  },
+  uploadController.upload,
 );
